@@ -49,7 +49,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Sign into ACR
         run: |
-            az account set -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            az login
             az acr login --name ${{ env.BASE_IMAGE_REGISTRY }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
