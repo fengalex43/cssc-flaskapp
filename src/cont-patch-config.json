@@ -1,0 +1,7 @@
+{
+    "repositories":[
+        {"repository":"nginx","tags":["*"],"enabled":true},
+        {"repository":"python","tags":["*"],"enabled":true}
+    ],
+    "version": "v1"
+}
