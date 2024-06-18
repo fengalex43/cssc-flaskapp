@@ -71,7 +71,7 @@ Run `kubectl config use-context docker-desktop.` Confirm this worked properly by
 
 Create a docker registry secret so that the helm chart can pull images from TARGET_IMAGE_REGISTRY. Run `az acr credential show --name <TARGET_IMAGE_REGISTRY>`. Run `kubectl create secret docker-registry acr-secret --docker-server=<TARGET_IMAGE_REGISTRY> --docker-username=<username> --docker-password=<password>`.
 
-Deploy the helm chart by running `helm install mychart ./mychart`. Run `kubectl port-forward svc/mychart 3000:80` so that you can access the deployment at http://localhost:3000. If you run into issues, debug using `kubectl get pods` and `kubectl logs`.
+Deploy the helm chart by running `helm install mychart ./mychart --set nginx.image=<TARGET_IMAGE_REGISTRY>/nginx:1.23-patched flaskapp,image=<TARGET_IMAGE_REGISTRY>/flaskapp:1.0`. Run `kubectl port-forward svc/mychart 3000:80` so that you can access the deployment at http://localhost:3000. If you run into issues, debug using `kubectl get pods` and `kubectl logs`.
 
 
 
