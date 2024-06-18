@@ -1,0 +1,37 @@
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: {{ include "mychart.name" . }}  
+  labels:  
+    app: {{ include "mychart.name" . }}  
+spec:  
+  replicas: {{ .Values.replicaCount }}  
+  selector:  
+    matchLabels:  
+      app: {{ include "mychart.name" . }}  
+  template:  
+    metadata:  
+      labels:  
+        app: {{ include "mychart.name" . }}  
+    spec:  
+      containers:  
+      - name: {{ .Chart.Name }}  
+        image: "{{ .Values.image.repository }}"  
+        imagePullPolicy: {{ .Values.image.pullPolicy }}  
+        ports:  
+        - containerPort: 5000  
+      - name: sidecar  
+        image: "{{ .Values.sidecar.image }}"
+        imagePullPolicy: {{ .Values.sidecar.pullPolicy }}   
+        ports:  
+        - containerPort: 80  
+        volumeMounts:  
+        - name: nginx-config-volume  
+          mountPath: /etc/nginx/nginx.conf  
+          subPath: nginx.conf  
+      volumes:  
+      - name: nginx-config-volume  
+        configMap:  
+          name: nginx-config    
+      imagePullSecrets:  
+      - name: acr-secret 

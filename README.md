@@ -57,8 +57,17 @@ Now, if you run `skopeo copy -a docker://docker.io/library/python:3.12.3 docker:
 ## Configure Continuous Patching Workflow
 Run `az extension add --source acrcssc-0.1.0-py3-none-any.whl` to install the continuous patching extension. This step is only necessary since continuous patching is not yet released.
 
+Run `az acr supply-chain workflow create --cadence 1d --config ./src/cont-patch-config.json -r BASE_IMAGE_REGISTRY -g RESOURCE_GROUP -t continuouspatchv1` to create the workflow.
+
+## Build the flaskapp Image
+Follow this guide to set up a service principal and authenticate using Workload Identity Federation: https://dev.to/massimobonanni/azure-workload-identity-federation-and-github-actions-pf7.
+
+After, grant your service principal Contributor access to your subscription.
+
 ## Deploy Python and Nginx Images Using Helm
 On docker desktop, go to "Settings" on the top right > "Kubernetes" > select "Enable" and "Show system containers (advanced)" > "Apply & restart."
+
+Run `kubectl config use-context docker-desktop.` Confirm this worked properly by running `kubectl get nodes`. You should see a docker-desktop node.
 
 
 
