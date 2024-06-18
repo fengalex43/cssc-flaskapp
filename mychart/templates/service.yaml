@@ -1,13 +1,21 @@
 apiVersion: v1  
 kind: Service  
 metadata:  
-  name: {{ include "mychart.name" . }}  
+  name: nginx-service  
 spec:  
-  type: LoadBalancer 
+  type: LoadBalancer  
   ports:  
     - port: 80  
-      targetPort: 80  
-      protocol: TCP  
-      name: http  
   selector:  
-    app: {{ include "mychart.name" . }}  
+    app: nginx  
+---  
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: flaskapp-service  
+spec:  
+  type: ClusterIP    
+  ports:  
+    - port: 5000    
+  selector:  
+    app: flaskapp  

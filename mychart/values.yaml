@@ -1,14 +1,5 @@
-replicaCount: 1  
-
-image:  
-  repository: csscflask.azurecr.io/flaskapp:1.0  
-  pullPolicy: Always  
-
-sidecar:  
+nginx:   
   image: csscflask.azurecr.io/nginx:1.23-patched  
-  pullPolicy: Always  
-
-service:  
-  type: NodePort  
-  port: 80  
-  nodePort: 30000  
+  
+flaskapp:  
+  image: csscflask.azurecr.io/flaskapp:1.0  

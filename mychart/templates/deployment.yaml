@@ -1,37 +1,47 @@
 apiVersion: apps/v1  
 kind: Deployment  
 metadata:  
-  name: {{ include "mychart.name" . }}  
-  labels:  
-    app: {{ include "mychart.name" . }}  
+  name: nginx-deployment  
 spec:  
-  replicas: {{ .Values.replicaCount }}  
+  replicas: 1 
   selector:  
     matchLabels:  
-      app: {{ include "mychart.name" . }}  
+      app: nginx  
   template:  
     metadata:  
       labels:  
-        app: {{ include "mychart.name" . }}  
+        app: nginx  
     spec:  
       containers:  
-      - name: {{ .Chart.Name }}  
-        image: "{{ .Values.image.repository }}"  
-        imagePullPolicy: {{ .Values.image.pullPolicy }}  
-        ports:  
-        - containerPort: 5000  
-      - name: sidecar  
-        image: "{{ .Values.sidecar.image }}"
-        imagePullPolicy: {{ .Values.sidecar.pullPolicy }}   
+      - name: nginx  
+        image:  {{ .Values.nginx.image }}  
         ports:  
         - containerPort: 80  
         volumeMounts:  
-        - name: nginx-config-volume  
-          mountPath: /etc/nginx/nginx.conf  
-          subPath: nginx.conf  
+        - name: config-volume  
+          mountPath: /etc/nginx/conf.d  
       volumes:  
-      - name: nginx-config-volume  
+      - name: config-volume  
         configMap:  
-          name: nginx-config    
-      imagePullSecrets:  
-      - name: acr-secret 
+          name: nginx-config
+---  
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: flaskapp-deployment  
+spec:  
+  replicas: 3
+  selector:  
+    matchLabels:  
+      app: flaskapp  
+  template:  
+    metadata:  
+      labels:  
+        app: flaskapp  
+    spec:  
+      containers:  
+      - name: flaskapp  
+        image: {{ .Values.flaskapp.image }} 
+        ports:  
+        - containerPort: 5000  
+
