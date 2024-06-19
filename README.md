@@ -23,7 +23,7 @@ Repository for CSSC's flask app
 
 ## Prerequisites
 * docker desktop
-* skopeo (can be installed using homebrew)
+* skopeo
 * az cli
 * helm
 
