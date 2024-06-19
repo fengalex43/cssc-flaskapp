@@ -64,7 +64,7 @@ Follow this guide to set up a service principal and authenticate using Workload 
 
 After, grant your service principal Contributor access to your subscription.
 
-Run the build-unsigned action to build and push the flaskapp image.
+Run the build-unsigned-flask-app action to build and push the flaskapp image.
 
 ## Deploy Python and Nginx Images Using Helm
 On docker desktop, go to "Settings" on the top right > "Kubernetes" > select "Enable" and "Show system containers (advanced)" > "Apply & restart." NOTE: Sometimes, docker desktop will be stuck on "Kubernetes is starting..." To fix this, shut down your laptop and start it again (do not click restart but shut down).
