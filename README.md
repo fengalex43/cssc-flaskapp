@@ -42,7 +42,7 @@ Run `skopeo copy -a docker://docker.io/library/nginx:1.23.2 docker://<SOURCE_IMA
 In the next step, artifact sync will be configured to sync with python:3.12 from your source registry into your ACR configured in the previous step. You'll do the same for the nginx:1.23 image.
 
 ## Configure Artifact Sync
-Request access to artifact sync by sending subscription ID to Luis/Tony. Visit the Preview Azure Portal at https://aka.ms/acr/portal/preview. These steps are only necessary since artifact sync is not yet released.
+Request access to artifact sync by sending subscription ID to Luis/Tony. Visit the Preview Azure Portal at [https://aka.ms/acr/portal/preview](https://aka.ms/acr/portal/preview/artifactsync). These steps are only necessary since artifact sync is not yet released.
 
 Navigate to "Services" tab on the left > "Cache" > "Create rule"
 
