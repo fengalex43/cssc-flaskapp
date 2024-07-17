@@ -59,6 +59,7 @@ jobs:
         with:
           context: ./sample
           push: true
+          provenance: mode=max
           tags: ${{ env.TARGET_IMAGE_REGISTRY }}/${{ env.TARGET_IMAGE_REPO }}:${{ env.TARGET_IMAGE_TAG }}
           build-args: |
             BASE_IMAGE=${{ env.BASE_IMAGE_REGISTRY }}/${{ env.BASE_IMAGE_REPO }}:${{ env.BASE_IMAGE_TAG }}
