@@ -1,4 +1,4 @@
-name: build-unsigned-flask-app
+name: copy-artifact
 
 on:
   workflow_dispatch
