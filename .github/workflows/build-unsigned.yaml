@@ -39,6 +39,8 @@ jobs:
         with:
           src-image: "docker://library/python:3.12.2"
           dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
+          dest-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dest-password: ${{ secrets.DOCKERHUB_TOKEN }}
           multi-arch: "system"
       - name: Display environment
         run: |
