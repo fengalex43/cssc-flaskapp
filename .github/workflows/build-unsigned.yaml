@@ -34,12 +34,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Copy python:3.12 to Docker Hub
+      - name: Copy python:3.12.2 to Docker Hub
         uses: truemark/skopeo-copy-action@v1
         with:
           src-image: "docker://library/python:3.12.2"
           dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
-          multi-arch: "all"
+          multi-arch: "system"
       - name: Display environment
         run: |
           echo "BASE_IMAGE_REGISTRY: $BASE_IMAGE_REGISTRY"
