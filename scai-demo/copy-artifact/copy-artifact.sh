@@ -2,8 +2,6 @@
 
 DIR="./scai-demo/copy-artifact/copy-artifact-metadata"
 
-echo COPY PYTHON IMAGE
-skopeo copy -a docker://docker.io/library/python:3.12.2 docker://docker.io/fengalex/python:3.12
 
 echo GENERATE COPIED ARTIFACT DESCRIPTOR
 ## NOTE: For some reason, -n specifies the uri instead of the name of the descriptor
