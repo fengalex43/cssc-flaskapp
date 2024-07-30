@@ -67,4 +67,4 @@ jobs:
         run: bash ./scai-demo/copy-artifact/copy-artifact.sh
       - name: Display attestation file
         run: |
-          echo ./copied-artifact.scai.json
+          echo ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
