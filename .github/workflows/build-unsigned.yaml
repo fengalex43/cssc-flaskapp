@@ -37,7 +37,7 @@ jobs:
       - name: Copy python:3.12 to Docker Hub
         uses: truemark/skopeo-copy-action@v1
         with:
-          src-image: "docker://docker.io/library/python:3.12.2"
+          src-image: "docker://library/python:3.12.2"
           dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
           multi-arch: "all"
       - name: Display environment
