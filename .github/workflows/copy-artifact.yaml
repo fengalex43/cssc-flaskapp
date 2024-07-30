@@ -23,7 +23,7 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
-  build-unsigned-flask-app:
+  copy-artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read
