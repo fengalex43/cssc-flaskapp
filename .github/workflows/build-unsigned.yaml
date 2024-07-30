@@ -18,6 +18,9 @@ env:
   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  DOCKERHUB_REGISTRY: ${{ vars.DOCKERHUB_REGISTRY }}
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 jobs:
   build-unsigned-flask-app:
@@ -26,6 +29,17 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Copy python:3.12 to Docker Hub
+        uses: truemark/skopeo-copy-action@v1
+        with:
+          src-image: "docker://docker.io/library/python:3.12.2"
+          dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
+          multi-arch: "all"
       - name: Display environment
         run: |
           echo "BASE_IMAGE_REGISTRY: $BASE_IMAGE_REGISTRY"
