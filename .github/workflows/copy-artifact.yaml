@@ -46,7 +46,16 @@ jobs:
           echo "TARGET_IMAGE_REPO: $TARGET_IMAGE_REPO"
           echo "TARGET_IMAGE_TAG: $TARGET_IMAGE_TAG"
           # echo "SIGNING_KEY_ID: $SIGNING_KEY_ID"
-      - name: Checkout the code
+      - name: Checkout SCAI repository  
+        uses: actions/checkout@v4  
+        with:  
+          ref: main  
+          repository: in-toto/scai-demos 
+      - name: Install SCAI dependencies  
+        run: apt install build-essential
+      - name: Install scai-gen 
+        run: make go-mod
+      - name: Checkout cssc-flaskapp repo
         uses: actions/checkout@v4
       - name: Create SCAI attestation
         run: bash ./scai-demo/copy-artifact/copy-artifact.sh
