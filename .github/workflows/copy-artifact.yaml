@@ -34,11 +34,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v4
+          
+      - name: Install Go
+        uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version: '>=1.22.5'
       - run: go version
+      
       - name: Copy python:3.12.2 to Docker Hub
         uses: truemark/skopeo-copy-action@v1
         with:
@@ -47,29 +50,29 @@ jobs:
           dest-username: ${{ secrets.DOCKERHUB_USERNAME }}
           dest-password: ${{ secrets.DOCKERHUB_TOKEN }}
           multi-arch: "system"
-      - name: Display environment
-        run: |
-          echo "BASE_IMAGE_REGISTRY: $BASE_IMAGE_REGISTRY"
-          echo "BASE_IMAGE_REPO: $BASE_IMAGE_REPO"
-          echo "BASE_IMAGE_TAG: $BASE_IMAGE_TAG"
-          echo "TARGET_IMAGE_REGISTRY: $TARGET_IMAGE_REGISTRY"
-          echo "TARGET_IMAGE_REPO: $TARGET_IMAGE_REPO"
-          echo "TARGET_IMAGE_TAG: $TARGET_IMAGE_TAG"
-          # echo "SIGNING_KEY_ID: $SIGNING_KEY_ID"
+          
       - name: Checkout SCAI repository  
         uses: actions/checkout@v4  
         with:  
           ref: main  
-          repository: in-toto/scai-demos 
+          repository: in-toto/scai-demos
+          
       - name: Install SCAI dependencies  
         run: sudo apt install build-essential
+        
       - run: go mod tidy
       - name: Install scai-gen 
         run: make go-mod
+        
       - name: Checkout cssc-flaskapp repo
         uses: actions/checkout@v4
+        
       - name: Create SCAI attestation
         run: bash ./scai-demo/copy-artifact/copy-artifact.sh
+        
       - name: Display attestation file
         run: |
-          cat ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json || echo "file not found"
+          cat ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
+          
+      - name: Attach attestation file to copied image
+        run: oras attach --artifact-type doc/example "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12" ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
