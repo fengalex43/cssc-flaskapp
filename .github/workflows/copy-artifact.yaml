@@ -52,7 +52,7 @@ jobs:
           ref: main  
           repository: in-toto/scai-demos 
       - name: Install SCAI dependencies  
-        run: apt install build-essential
+        run: sudo apt install build-essential
       - name: Install scai-gen 
         run: make go-mod
       - name: Checkout cssc-flaskapp repo
