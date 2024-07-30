@@ -34,6 +34,7 @@ jobs:
         with:
           go-version: '>=1.22.5'
       - run: go version
+      - run: go mod tidy
       - name: Copy python:3.12.2 to Docker Hub
         uses: truemark/skopeo-copy-action@v1
         with:
