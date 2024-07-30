@@ -1,0 +1,55 @@
+name: build-unsigned-flask-app
+
+on:
+  workflow_dispatch
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+
+env:
+  BASE_IMAGE_REGISTRY: ${{ vars.BASE_IMAGE_REGISTRY }}
+  BASE_IMAGE_REPO: ${{ vars.BASE_IMAGE_REPO }}
+  BASE_IMAGE_TAG: ${{ vars.BASE_IMAGE_TAG }}
+  TARGET_IMAGE_REGISTRY: ${{ vars.TARGET_IMAGE_REGISTRY }}
+  TARGET_IMAGE_REPO: flaskapp
+  TARGET_IMAGE_TAG: ${{ vars.TARGET_IMAGE_TAG }}
+  # SIGNING_KEY_ID: ${{ vars.SIGNING_KEY_ID }}
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  DOCKERHUB_REGISTRY: ${{ vars.DOCKERHUB_REGISTRY }}
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+jobs:
+  build-unsigned-flask-app:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Copy python:3.12.2 to Docker Hub
+        uses: truemark/skopeo-copy-action@v1
+        with:
+          src-image: "docker://library/python:3.12.2"
+          dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
+          dest-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dest-password: ${{ secrets.DOCKERHUB_TOKEN }}
+          multi-arch: "system"
+      - name: Display environment
+        run: |
+          echo "BASE_IMAGE_REGISTRY: $BASE_IMAGE_REGISTRY"
+          echo "BASE_IMAGE_REPO: $BASE_IMAGE_REPO"
+          echo "BASE_IMAGE_TAG: $BASE_IMAGE_TAG"
+          echo "TARGET_IMAGE_REGISTRY: $TARGET_IMAGE_REGISTRY"
+          echo "TARGET_IMAGE_REPO: $TARGET_IMAGE_REPO"
+          echo "TARGET_IMAGE_TAG: $TARGET_IMAGE_TAG"
+          # echo "SIGNING_KEY_ID: $SIGNING_KEY_ID"
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Create SCAI attestation
+        run: bash ./scai-demo/copy-artifact/copy-artifact.sh
+      - name: Display attestation file
+        run: |
+          echo ./copied-artifact.scai.json
