@@ -88,4 +88,4 @@ jobs:
           cat ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
           
       - name: Attach attestation file to copied image
-        run: oras attach --artifact-type doc/example "docker.io/fengalex43/python:3.12" ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
+        run: oras attach --artifact-type doc/example "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12" ./scai-demo/copy-artifact/copy-artifact-metadata/copied-artifact.scai.json
