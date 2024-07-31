@@ -59,7 +59,7 @@ jobs:
         uses: truemark/skopeo-copy-action@v1
         with:
           src-image: "docker://library/python:3.12.2"
-          dest-image: "${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
+          dest-image: "docker://${{ vars.DOCKERHUB_REGISTRY }}/python:3.12"
           dest-username: ${{ secrets.DOCKERHUB_USERNAME }}
           dest-password: ${{ secrets.DOCKERHUB_TOKEN }}
           multi-arch: "system"
