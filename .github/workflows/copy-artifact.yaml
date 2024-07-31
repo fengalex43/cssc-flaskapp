@@ -23,7 +23,7 @@ env:
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
-  set-up:
+  copy-artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,12 +55,6 @@ jobs:
       - name: Install scai-gen 
         run: make go-mod
 
-  copy-image:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        id-token: write
-      steps:
       - name: Copy python:3.12.2 to Docker Hub
         uses: truemark/skopeo-copy-action@v1
         with:
@@ -70,13 +64,6 @@ jobs:
           dest-password: ${{ secrets.DOCKERHUB_TOKEN }}
           multi-arch: "system"
           
-      
-  create-attestation:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        id-token: write
-      steps:
       - name: Checkout cssc-flaskapp repo
         uses: actions/checkout@v4
         

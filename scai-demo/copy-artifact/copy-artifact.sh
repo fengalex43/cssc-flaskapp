@@ -5,7 +5,7 @@ DIR="./scai-demo/copy-artifact/copy-artifact-metadata"
 
 echo GENERATE COPIED ARTIFACT DESCRIPTOR
 ## NOTE: For some reason, -n specifies the uri instead of the name of the descriptor
-scai-gen rd remote -n docker://docker.io/fengalex/python:3.12 -g sha256 -d 19973e1796237522ed1fcc1357c766770b47dc15854eafdda055b65953fe5ec1 -o $DIR/copied-artifact-desc.json "python:3.12"
+scai-gen rd remote -n docker://fengalex/python:3.12 -g sha256 -d 19973e1796237522ed1fcc1357c766770b47dc15854eafdda055b65953fe5ec1 -o $DIR/copied-artifact-desc.json "python:3.12"
 
 echo GENERATE SOURCE ARTIFACT DESCRIPTOR
 # cat <<EOF > $DIR/source-artifact-annotations.json
@@ -13,7 +13,7 @@ echo GENERATE SOURCE ARTIFACT DESCRIPTOR
 # EOF
 echo "{\"copiedTime\": \"$(date +%FT%T)\"}" > $DIR/source-artifact-annotations.json
 ## NOTE: For some reason, -n specifies the uri instead of the name of the descriptor
-scai-gen rd remote -n docker://docker.io/library/python:3.12.2 -a $DIR/source-artifact-annotations.json -g sha256 -d 19973e1796237522ed1fcc1357c766770b47dc15854eafdda055b65953fe5ec1 -o $DIR/source-artifact-desc.json "python:3.12.2"
+scai-gen rd remote -n docker://library/python:3.12.2 -a $DIR/source-artifact-annotations.json -g sha256 -d 19973e1796237522ed1fcc1357c766770b47dc15854eafdda055b65953fe5ec1 -o $DIR/source-artifact-desc.json "python:3.12.2"
 
 echo GENERATE COPY TOOL DESCRIPTOR
 ## NOTE: For some reason, -n specifies the uri instead of the name of the descriptor
